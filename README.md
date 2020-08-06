@@ -14,7 +14,7 @@
 
 + **Visiting the http web-site, we are welcomed by a page which contains info about a specific password-manager app built by some developers. We also see a download link button**
 
-# ![2](images/visit.png?raw=true "visit")
+# ![2](images/visited.jpg?raw=true "visit")
 
 **Accessing the download page, we can look through the Source code of the password-manager app. It looks like it's written in go language which encrypt passwords with the ROT47 algorithm**
 
