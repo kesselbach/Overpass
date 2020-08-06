@@ -94,6 +94,7 @@ async function login() {
 **Next step is to create a similar path with the /etc/crontab curl get request from the host - */downloads/src/buildscript.sh*. Let's do this into our local machine and we're gonna host the server into our home directory**
 
 ``mkdir downloads``
+
 ``mkdir src``
 
 **Now, let's create the *buildscript.sh***
