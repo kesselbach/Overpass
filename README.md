@@ -69,7 +69,7 @@ async function login() {
 
 **Using our password for the ssh we are in! There's two files into user's home directory: one of them is our user's flag and the other seems to be an update of their encryption app**
 
-# ![8](images/userflag.jpg?raw=true "userfl")
+# ![8](images/userflag(1).jpg?raw=true "userfl")
 
 + **According the message inside the todo.txt file, we can see that james is using the same app to encrypt his password. Listing the hidden files inside his directory we can see another file named** *.overpass* **It seems to be james password so we're gonna use it, but first don't forget to decrypt it, because it's encrypted with ROT47, as they said in the beginning page**
 
@@ -89,7 +89,7 @@ async function login() {
 
 + **What if we can run our own script on this machine? If we modify the overpass.thm domain into our local machine domain, we can host locally a python server and upload maybe a python script which get us a reverse shell. The respective script is executed by root so we're gonna get a root shell**
 
-# ![12](images/modify.jpg?raw=true "modify")
+# ![12](images/modfiy.jpg?raw=true "modify")
 
 **Next step is to create a similar path with the /etc/crontab curl get request from the host - */downloads/src/buildscript.sh*. Let's do this into our local machine and we're gonna host the server into our home directory**
 
@@ -108,7 +108,7 @@ async function login() {
 
 ``nc -lvnp 1234``
 
-# ![14](images/rootflagos.jpg?raw=true "flagos")
+# ![14](images/root_flagos.jpg?raw=true "flagos")
 
 **And we are root! It was a nice box with a very important vulnerability based on the Broken Authentication and some exploiting crontab service. All thanks goes to the creator, NinjaJc01!**
 
