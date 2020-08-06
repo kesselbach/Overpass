@@ -6,7 +6,7 @@
 ## Foothold
 + **Let's start with a nmap scan for ports**
 
-``nmap -sV -sC -oN scan1  10.10.135.227``
+``nmap -sV -sC -oN scan1 10.10.107.5``
 
 + **We can clearly see 2 ports open, ssh and a http, configured on default ports**
 
@@ -17,3 +17,12 @@
 # ![2](images/visit.png?raw=true "visit")
 
 **Accessing the download page, we can look through the Source code of the password-manager app. It looks like it's written in go language which encrypt passwords with the ROT47 algorithm**
+
++ **Let's do a gobuster scan of the web site**
+
+``gobuster dir -u http://10.10.107.5/ -w /usr/share/wordlists/dirb/big.txt``
+
+# ![2](images/dirbus(1).jpg?raw=true "dirb")
+
+**We can spot an admin page 
+
