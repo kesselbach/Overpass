@@ -88,7 +88,7 @@ async function login() {
 
 # ![10](images/croned.jpg?raw=true "crontab")
 
-+ **We can see a curl command, executed by root, which runs every second and transfer the data from the *buildscript.sh*, the building script for their encrypting app, into terminal, then executed by bash. This script is taken from the machine local web-site, and the domain used is overpass.thm. If we look into the /etc/hosts file we can see the overpass.thm dns belongs to the local ip of the machine**
++ **We can see a curl command, executed by root, which runs every minute and transfer the data from the *buildscript.sh*, the building script for their encrypting app, into terminal, then executed by bash. This script is taken from the machine local web-site, and the domain used is overpass.thm. If we look into the /etc/hosts file we can see the overpass.thm dns belongs to the local ip of the machine**
 
 # ![11](images/hostsetc.png?raw=true "hostsetc")
 
