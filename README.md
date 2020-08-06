@@ -52,7 +52,20 @@ async function login() {
 
 # ![5](images/session.jpg?raw=true "sess")
 
-**Now, trying to refresh the page we can observe we bypassed the login auth and a RSA private key of some guy named James is on our screen. Let's use it to connect to ssh**
+**Now, trying to refresh the page we can observe we bypassed the login auth and a RSA private key of some guy named James is on our screen. Let's save it in some txt file and use it to connect to ssh**
 
 # ![6](images/RSA.jpg?raw=true "rsa")
+
+``chmod 600 id_rsa``
+``ssh -i id_rsa james@10.10.107.5``
+
++ **Trying to connect to ssh, a key is required for our file. Let's use ssh2john to bruteforce our way in: i'm gonna use ssh2john to get our first hash then crack it with john using the rockyou.txt wordlist**
+
+``python ssh2john.py id_rsa > key_hash``
+``sudo john key_hash -wordlist=/usr/share/wordlists/rockyou.txt``
+
+# ![7](images/johned.jpg?raw=true "johnny")
+
+**Using our password for the ssh we are in! There's two files into user's home directory**
+
 
