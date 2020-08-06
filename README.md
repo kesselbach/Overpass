@@ -63,6 +63,7 @@ async function login() {
 + **Trying to connect to ssh, a key is required for our file. Let's use ssh2john to bruteforce our way in: i'm gonna use ssh2john to get our first hash then crack it with john using the rockyou.txt wordlist**
 
 ``python ssh2john.py id_rsa > key_hash``
+
 ``sudo john key_hash -wordlist=/usr/share/wordlists/rockyou.txt``
 
 # ![7](images/johned.jpg?raw=true "johnny")
