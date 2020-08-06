@@ -52,6 +52,8 @@ async function login() {
 
 # ![5](images/session.jpg?raw=true "sess")
 
+## User escalation
+
 **Now, trying to refresh the page we can observe we bypassed the login auth and a RSA private key of some guy named James is on our screen. Let's save it in some txt file and use it to connect to ssh**
 
 # ![6](images/RSA.jpg?raw=true "rsa")
@@ -71,6 +73,8 @@ async function login() {
 **Using our password for the ssh we are in! There's two files into user's home directory: one of them is our user's flag and the other seems to be an update of their encryption app**
 
 # ![8](images/userflag(1).jpg?raw=true "userfl")
+
+## Root escalation
 
 + **According the message inside the todo.txt file, we can see that james is using the same app to encrypt his password. Listing the hidden files inside his directory we can see another file named** *.overpass* **It seems to be james password so we're gonna use it, but first don't forget to decrypt it, because it's encrypted with ROT47, as they said in the beginning page**
 
