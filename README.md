@@ -1,6 +1,6 @@
 # 'Overpass' box writeup
 ## Overpass is a CTF box written by NinjaJc01 and available on the [TryHackMe](https://tryhackme.com/) platform.
-## Read about
+## Read about [Broken Authentication](https://www.youtube.com/watch?v=mruO75ONWy8), [OWASP A2](https://owasp.org/www-project-top-ten/OWASP_Top_Ten_2017/Top_10-2017_A2-Broken_Authentication)
 # ![bg](images/background.png?raw=true "Title")
 
 ## Foothold
@@ -22,7 +22,37 @@
 
 ``gobuster dir -u http://10.10.107.5/ -w /usr/share/wordlists/dirb/big.txt``
 
-# ![2](images/dirbus(1).jpg?raw=true "dirb")
+# ![3](images/admin.jpg?raw=true "admin")
 
-**We can spot an admin page 
++ **We can spot an admin page and accessing it, we can see an administrator login area. I tried, unsuccessfully, a SQL injection and then moved on the 2nd OWASP vuln. Let's look into the source code of the page and into some js code**
+
+# ![4](images/scripts.jpg?raw=true "scripts")
+
+**We can clearly see a login.js script so let's look into the source code. The login function seems to be a way to go**
+
+```js
+async function login() {
+    const usernameBox = document.querySelector("#username");
+    const passwordBox = document.querySelector("#password");
+    const loginStatus = document.querySelector("#loginStatus");
+    loginStatus.textContent = ""
+    const creds = { username: usernameBox.value, password: passwordBox.value }
+    const response = await postData("/api/login", creds)
+    const statusOrCookie = await response.text()
+    if (statusOrCookie === "Incorrect credentials") {
+        loginStatus.textContent = "Incorrect Credentials"
+        passwordBox.value=""
+    } else {
+        Cookies.set("SessionToken",statusOrCookie)
+        window.location = "/admin"
+    }
+```
+
++ **The credentials of the login page are sent to a endpoint inside some DB of the box and a session token is used. It seems like the session token is set with the statusOrCookie parameter. If we change the SessionToken value, maybe we can bypass the login. Let's create the cookie with the name of *SessionToken* and any value you want inside it**
+
+# ![5](images/session.jpg?raw=true "sess")
+
+**Now, trying to refresh the page we can observe we bypassed the login auth and a RSA private key of some guy named James is on our screen. Let's use it to connect to ssh**
+
+# ![6](images/RSA.jpg?raw=true "rsa")
 
